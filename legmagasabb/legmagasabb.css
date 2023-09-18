@@ -1,0 +1,13 @@
+.card-text {
+    text-align: justify;
+}
+
+.card-title {
+    border-bottom: 1px dotted;
+    padding-bottom: 2px;
+}
+
+.card {
+    background-color: var(--bs-warning);
+    margin: 3px;
+}

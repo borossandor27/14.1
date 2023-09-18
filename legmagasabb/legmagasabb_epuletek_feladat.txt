@@ -1,0 +1,17 @@
+Webprogramozás - Legmagasabb épületek - bootstrappel
+Határidő holnap ekkor: 23:59
+Utasítások
+Készíts weblapot a világ legmagasabb épületeiről.
+Az elkészült weboldalnak a minta.png-hez hasonlóan kell majd kinéznie.
+az oldalon használandó képeket az img tömörített állomány tartalmazza.
+Az oldal szövegét a epuletek.txt tartalmazza.
+
+Az oldal formázásához kizárólag bootstrapes stílusosztályokat használj.
+Az épületek megjelenítéséhez bootstrapes "card"-ot használj. Kijelző mérettől függően eltérő mennyiségű kártya legyen egymás mellett
+extra-large és nagyobb: 4
+medium és nagyobb: 3
+mediumnál kisebb: 1
+A kártyák háttérszínekhez használd a bootstrap "warning" színét. Ahol szükséges ennek átlátszóságát módosítsd.
+A kártyák szegélyének színe a bootstrapes "danger" szín legyen.
+A teljes oldal háttérszínét olyan színre állítsd ami legjobban hasonlít a mintához.
+Ügyelj rá, hogy törekedj minél jobban hasonlítani a mintához (lekerekített képek, stb.)
