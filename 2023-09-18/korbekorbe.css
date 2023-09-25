@@ -1,5 +1,9 @@
-#kor {
+#teknos
+{
     position: absolute;
-    width: 7vw;
-    height: auto;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background-color: red;
+    border: 1px solid darkred;
 }
