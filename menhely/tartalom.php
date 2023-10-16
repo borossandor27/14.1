@@ -1,4 +1,5 @@
 <?php
+
 switch ($menu) {
     case 'orokbefogadasUser':
         require_once './pages/orokbefogadasUser.php';
@@ -17,6 +18,13 @@ switch ($menu) {
         break;
     case 'rolunk':
         require_once './pages/rolunk.php';
+        break;
+    case 'home':
+        if ($id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)) {
+            require_once './pages/kivalasztottAllat.php';
+        } else {
+            require_once './pages/home.php';
+        }
         break;
     default:
         require_once './pages/home.php';

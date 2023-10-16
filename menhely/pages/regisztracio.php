@@ -56,6 +56,7 @@ if (filter_input(INPUT_POST, "regisztraciosAdatok", FILTER_VALIDATE_BOOLEAN, FIL
             <div class="mb-3 col-6">
                 <label for="InputPassword" class="form-label">Jelszó</label>
                 <input type="password" class="form-control" id="InputPassword" name="InputPassword" required>
+                <div id="usernameHelp" class="form-text">Bejelentkezéshez.</div>
             </div>
             <div class="mb-3 col-6">
                 <label for="InputPassword2" class="form-label">Jelszó még egyszer</label>

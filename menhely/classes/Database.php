@@ -50,4 +50,13 @@ class Database {
             echo '<p>Rögzítés sikertelen!</p>';
         }
     }
+    
+    function osszesAllat() {
+        $result = $this->db->query("SELECT * FROM `allat`");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    function kivalasztottAllat($id) {
+        $result = $this->db->query("SELECT * FROM `allat` WHERE allatid=".$id);
+        return $result->fetch_assoc();
+    }
 }
