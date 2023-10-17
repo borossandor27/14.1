@@ -1,4 +1,7 @@
+
 <?php
+echo '<pre>';
+echo '</pre>';
 
 function validSzig($param) {
     $pattern = "/[1-9]{1}[0-9]{5}[A-Za-z]{2}/";
@@ -66,3 +69,33 @@ if (filter_input(INPUT_POST, "regisztraciosAdatok", FILTER_VALIDATE_BOOLEAN, FIL
         <button type="submit" class="col-2 mx-auto btn btn-outline-primary" name="regisztraciosAdatok" value="true">Regisztráció</button>
     </form>
 </div>
+<script>
+    var passwordInputs = document.querySelectorAll("input[type=password]");
+    function validPass(password) {
+        console.log(password);
+        let theLength = /.{6,32}/;
+        let lowerCase = /[a-z]/;
+        let upperCase = /[A-Z]/;
+        let digit = /[0-9]/;
+        let specialChars = /^[a-zA-Z0-9]/;
+        if (theLength.test(password) &&
+                lowerCase.test(password) &&
+                upperCase.test(password) &&
+                digit.test(password) &&
+                specialChars.test(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function passStrength(password) {
+        let strength = password.length;
+
+    }
+
+    let pass = "ABC";
+    console.log(pass, validPass(pass));
+    pass = "ABCabc\>1A23N4";
+    console.log(pass, validPass(pass));
+</script>

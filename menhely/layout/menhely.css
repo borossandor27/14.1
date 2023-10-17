@@ -9,3 +9,7 @@
     content:" *";
     color: red;
   }
+  .card-img, .card-img-top {
+      max-height: 150px;
+      width: auto;
+  }

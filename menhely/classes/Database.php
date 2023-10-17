@@ -10,7 +10,7 @@ class Database {
 
     public function login($name, $pass) {
         //-- jelezzük a végrehajtandó SQL parancsot
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE users.name LIKE ?;');
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE users.user LIKE ?;');
         //-- elküldjük a végrehajtáshoz szükséges adatokat
         $stmt->bind_param("s", $name);
 
@@ -36,7 +36,6 @@ class Database {
         }
         return false;
     }
-
     public function register($name, $pass) {
         //$password = password_hash($pass, PASSWORD_ARGON2I);
         $stmt = $this->db->prepare("INSERT INTO `users` (`name`, `password`) VALUES (?, ?);");
@@ -50,13 +49,20 @@ class Database {
             echo '<p>Rögzítés sikertelen!</p>';
         }
     }
-    
-    function osszesAllat() {
+    public function osszesAllat() {
         $result = $this->db->query("SELECT * FROM `allat`");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    function kivalasztottAllat($id) {
+    public function kivalasztottAllat($id) {
         $result = $this->db->query("SELECT * FROM `allat` WHERE allatid=".$id);
         return $result->fetch_assoc();
+    }
+    public function getFajok() {
+        $result = $this->db->query("SELECT DISTINCT `faj` FROM `allat`;");
+        return $result->fetch_all();
+    }
+       public function getFajtak() {
+        $result = $this->db->query("SELECT DISTINCT `fajta` FROM `allat`;");
+        return $result->fetch_all();
     }
 }
