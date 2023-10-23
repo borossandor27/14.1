@@ -52,7 +52,7 @@ if (filter_input(INPUT_POST, "regisztraciosAdatok", FILTER_VALIDATE_BOOLEAN, FIL
             </div>
             <div class="mb-3 col-auto">
                 <label for="szigszam" class="form-label">Személyigazolvány száma:</label>
-                <input type="text" class="form-control" id="szigszam" name="szigszam" pattern="[1-9]{1}[0-9]{5}[A-Za-z]{2}" aria-describedby="szigszamHelp">
+                <input type="text" class="form-control" id="szigszam" name="szigszam" pattern="[1-9]{1}[0-9]{5}[A-Za-z]{2}" aria-describedby="szigszamHelp" required>
                 <div id="szigszamHelp" class="form-text">A pontos beazonosítás miatt.</div>
                 <div class="invalid-feedback">Kérem ellenőrízze a beírt adatot! A személyigazolványszám helyes formátuma: 111111AA</div>
             </div>
@@ -60,13 +60,12 @@ if (filter_input(INPUT_POST, "regisztraciosAdatok", FILTER_VALIDATE_BOOLEAN, FIL
         <div class="mb-3">
             <label for="username" class="form-label">Felhasználó név</label>
             <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp" required>
-            <div id="usernameHelp" class="form-text">Bejelentkezéshez.</div>
+            <div id="usernameHelp" class="form-text">Bejelentkezéshez használt azonosító.</div>
         </div>
         <div class="row">
             <div class="mb-3 col-6">
                 <label for="InputPassword" class="form-label">Jelszó</label>
                 <input type="password" class="form-control" id="InputPassword" name="InputPassword" required>
-                <div id="usernameHelp" class="form-text">Bejelentkezéshez.</div>
             </div>
             <div class="mb-3 col-6">
                 <label for="InputPassword2" class="form-label">Jelszó még egyszer</label>

@@ -1,7 +1,17 @@
 <?php
 if (filter_input(INPUT_POST, "Adatmodositas", FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE)) {
     $adatok = $_POST;
-    var_dump($_FILES);
+    var_dump($adatok);
+    $allatid = filter_input(INPUT_POST, "allatid", FILTER_SANITIZE_NUMBER_INT);
+    $allat_neve = htmlspecialchars(filter_input(INPUT_POST, "allat_neve"));
+    $faj = filter_input(INPUT_POST, "fajSelect");
+    $fajta = filter_input(INPUT_POST, "fajtaSelect");
+    $szuletesi_ido = filter_input(INPUT_POST, "szuletesi_ido");
+    $nem = filter_input(INPUT_POST, "nemSelect");
+    $megjegyzes = filter_input(INPUT_POST, "megjegyzes");
+    $nyilvantartasban = filter_input(INPUT_POST, "nyilvantartasban");
+    $from = null;
+    $to = null;
     if ($_FILES['kepfajl']['error'] == 0) {
         $kiterjesztes = null;
         switch ($_FILES['kepfajl']['type']) {
@@ -14,14 +24,23 @@ if (filter_input(INPUT_POST, "Adatmodositas", FILTER_VALIDATE_BOOL, FILTER_NULL_
             default:
                 break;
         }
-        $forras = $_FILES['kepfajl']['tmp_name'];
-        $cel = dir(getcwd());
-        var_dump($cel->path);
-        $destination = $cel->path . DIRECTORY_SEPARATOR . "allatkepek" . DIRECTORY_SEPARATOR . $adatok['allat_neve'] . $kiterjesztes;
-        copy($forras, $cel);
+        $from = $_FILES['kepfajl']['tmp_name'];
+        $to = dir(getcwd());
+        $to = $to->path . DIRECTORY_SEPARATOR . "allatkepek" . DIRECTORY_SEPARATOR . $allat_neve . $kiterjesztes;
+        if (copy($from, $to)) {
+            echo '<p>A kép feltöltés sikeres</p>';
+        } else {
+            echo '<p>A kép feltöltés sikertelen!</p>';
+        }
+    }
+    if ($db->setKivalasztottAllat($allatid, $allat_neve, $faj, $fajta, $szuletesi_ido, $nem, $megjegyzes, $nyilvantartasban)) {
+        echo '<p>Az adatok módosítása sikeres</p>';
+        header("Location: index.php?menu=home");
+    } else {
+        echo '<p>Az adatok módosítása sikertelen!</p>';
     }
 } else {
-    $adatok = $db->kivalasztottAllat($id);
+    $adatok = $db->getKivalasztottAllat($id);
 }
 ?>
 <!--<!-- array (size=8)
@@ -79,8 +98,8 @@ if (filter_input(INPUT_POST, "Adatmodositas", FILTER_VALIDATE_BOOL, FILTER_NULL_
         <div class="mb-3 col-6">
             <label for="nem" class="form-label">Az állat neme</label>
             <select id="nemSelect" name="nemSelect" class="form-select">
-                <option<?php echo ($adatok['nem'] == "kan" ? " selected " : ""); ?> value="kan">kan</option>
-                <option<?php echo ($adatok['nem'] == "szuka" ? " selected " : ""); ?> value="szuka">szuka</option>
+                <option<?php echo ($adatok["nemSelect"] == "kan" || $adatok["nem"] == "kan"  ? " selected " : ""); ?> value="kan">kan</option>
+                <option<?php echo ($adatok["nemSelect"] == "szuka" ? " selected " : ""); ?> value="szuka">szuka</option>
             </select>
         </div>
     </div>

@@ -3,9 +3,17 @@
 class Database {
 
     private $db = null;
+    public $error = false;
 
     public function __construct($host, $username, $pass, $db) {
-        $this->db = new mysqli($host, $username, $pass, $db);
+        try {
+            $this->db = new mysqli($host, $username, $pass, $db);
+            $this->db->set_charset("utf8");
+        } catch (Exception $exc) {
+            $this->error = true;
+            echo '<p>Az adatbázis nem elérhető!</p>';
+            exit();
+        }
     }
 
     public function login($name, $pass) {
@@ -18,13 +26,9 @@ class Database {
             //-- sikeres végrehajtás után lekérjük az adatokat
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            echo '<pre>';
-            var_dump($row);
-            var_dump(password_hash($pass, PASSWORD_ARGON2I));
-            echo '</pre>';
             if ($pass == $row['password']) {
                 //-- felhasználónév és jelszó helyes
-                $_SESSION['username'] = $row['name'];
+                $_SESSION['user'] = $row;
                 $_SESSION['login'] = true;
             } else {
                 $_SESSION['username'] = '';
@@ -51,7 +55,7 @@ class Database {
                 echo '<p>Rögzítés sikertelen!</p>';
             }
         } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
+            $this->error = true;
         }
     }
 
@@ -60,9 +64,15 @@ class Database {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function kivalasztottAllat($id) {
+    public function getKivalasztottAllat($id) {
         $result = $this->db->query("SELECT * FROM `allat` WHERE allatid=" . $id);
         return $result->fetch_assoc();
+    }
+
+    public function setKivalasztottAllat($allatid, $allat_neve, $faj, $fajta, $szuletesi_ido, $nem, $megjegyzes, $nyilvantartasban) {
+        $stmt = $this->db->prepare("UPDATE `allat` SET `allat_neve`= ?,`faj`= ?,`fajta`= ?,`szuletesi_ido`= ?,`nem`= ?,`megjegyzes`= ?,`nyilvantartasban`= ? WHERE allatid= ?");
+        $stmt->bind_param('isssssss', $allatid, $allat_neve, $faj, $fajta, $szuletesi_ido, $nem, $megjegyzes, $nyilvantartasban);
+        return $stmt->execute();
     }
 
     public function getFajok() {
