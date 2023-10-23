@@ -1,30 +1,37 @@
 
 <?php
-echo '<pre>';
-echo '</pre>';
 
 function validSzig($param) {
     $pattern = "/[1-9]{1}[0-9]{5}[A-Za-z]{2}/";
-    echo '<pre>';
-    var_dump("123", preg_match($pattern, "123"));
-    var_dump("12356AA", preg_match($pattern, "123"));
-    echo '</pre>';
     return preg_match($pattern, $param);
 }
 
 if (filter_input(INPUT_POST, "regisztraciosAdatok", FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)) {
     $error = false;
+    $errormessage = "";
     $pass1 = filter_input(INPUT_POST, "InputPassword");
     $pass2 = filter_input(INPUT_POST, "InputPassword2");
-    $name = htmlspecialchars(filter_input(INPUT_POST, "username"));
-
-    //echo validSzig("1234");
-    if ($pass1 == $pass2) {
-        //-- regisztráció indítása
-        $db->register($name, $pass1);
-        header("Location:index.php"); //-- átvált a nyitólapra
+    $username = htmlspecialchars(filter_input(INPUT_POST, "username"));
+    $igazolvanyszam = filter_input(INPUT_POST, "szigszam");
+    $orokbefogado_neve = htmlspecialchars(filter_input(INPUT_POST, "felhasznalonev"));
+    $emailcim = filter_input(INPUT_POST, "useremail", FILTER_VALIDATE_EMAIL);
+    if ($pass1 != $pass2) {
+        $error = true;
+        $errormessage .= '<p>Nem egyeznek a jelszavak!</p>';
+    } else if ($username == null) {
+        $error = true;
+        $errormessage .= '<p>Nem megfelelő felhasználónév</p>';
+    } else if (!$igazolvanyszam) {
+        $error = true;
+        $errormessage .= '<p>Az igazolványszám nem megfelelő formátumú</p>';
+    }
+    
+    if ($error) {
+        echo $errormessage;
     } else {
-        echo '<p>Nem egyeznek a jelszavak!</p>';
+        //-- regisztrációs adatok kiírása
+        $db->register($igazolvanyszam, $orokbefogado_neve, $emailcim, $username, $pass1);
+        header("Location:index.php"); //-- átvált a nyitólapra
     }
 }
 ?>
@@ -94,8 +101,4 @@ if (filter_input(INPUT_POST, "regisztraciosAdatok", FILTER_VALIDATE_BOOLEAN, FIL
 
     }
 
-    let pass = "ABC";
-    console.log(pass, validPass(pass));
-    pass = "ABCabc\>1A23N4";
-    console.log(pass, validPass(pass));
 </script>

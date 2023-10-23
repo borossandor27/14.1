@@ -10,7 +10,7 @@ class Database {
 
     public function login($name, $pass) {
         //-- jelezzük a végrehajtandó SQL parancsot
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE users.user LIKE ?;');
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE users.username LIKE ?;');
         //-- elküldjük a végrehajtáshoz szükséges adatokat
         $stmt->bind_param("s", $name);
 
@@ -36,32 +36,41 @@ class Database {
         }
         return false;
     }
-    public function register($name, $pass) {
+
+    public function register($igazolvanyszam, $orokbefogado_neve, $emailcim, $username, $password) {
         //$password = password_hash($pass, PASSWORD_ARGON2I);
-        $stmt = $this->db->prepare("INSERT INTO `users` (`name`, `password`) VALUES (?, ?);");
-        $stmt->bind_param("ss", $name, $pass);
-        if ($stmt->execute()) {
-            //echo $stmt->affected_rows();
-            $_SESSION['login'] = true;
-            //header("Location: index.php");
-        } else {
-            $_SESSION['login'] = false;
-            echo '<p>Rögzítés sikertelen!</p>';
+        $stmt = $this->db->prepare("INSERT INTO `users`(`userid`, `igazolvanyszam`, `orokbefogado_neve`, `emailcim`, `username`, `password`) VALUES (NULL,?,?,?,?,?)");
+        $stmt->bind_param("sssss", $igazolvanyszam, $orokbefogado_neve, $emailcim, $username, $password);
+        try {
+            if ($stmt->execute()) {
+                //echo $stmt->affected_rows();
+                $_SESSION['login'] = true;
+                //header("Location: index.php");
+            } else {
+                $_SESSION['login'] = false;
+                echo '<p>Rögzítés sikertelen!</p>';
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
         }
     }
+
     public function osszesAllat() {
         $result = $this->db->query("SELECT * FROM `allat`");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
     public function kivalasztottAllat($id) {
-        $result = $this->db->query("SELECT * FROM `allat` WHERE allatid=".$id);
+        $result = $this->db->query("SELECT * FROM `allat` WHERE allatid=" . $id);
         return $result->fetch_assoc();
     }
+
     public function getFajok() {
         $result = $this->db->query("SELECT DISTINCT `faj` FROM `allat`;");
         return $result->fetch_all();
     }
-       public function getFajtak() {
+
+    public function getFajtak() {
         $result = $this->db->query("SELECT DISTINCT `fajta` FROM `allat`;");
         return $result->fetch_all();
     }

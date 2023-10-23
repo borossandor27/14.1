@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Okt 10. 11:22
+-- Létrehozás ideje: 2023. Okt 23. 09:15
 -- Kiszolgáló verziója: 10.4.28-MariaDB
 -- PHP verzió: 8.2.4
 
@@ -29,7 +29,6 @@ USE `menhely`;
 -- Tábla szerkezet ehhez a táblához `allat`
 --
 
-DROP TABLE IF EXISTS `allat`;
 CREATE TABLE `allat` (
   `allatid` int(10) UNSIGNED NOT NULL,
   `allat_neve` varchar(70) NOT NULL,
@@ -69,29 +68,11 @@ INSERT INTO `allat` (`allatid`, `allat_neve`, `faj`, `fajta`, `szuletesi_ido`, `
 -- Tábla szerkezet ehhez a táblához `orokbefogadas`
 --
 
-DROP TABLE IF EXISTS `orokbefogadas`;
 CREATE TABLE `orokbefogadas` (
   `allatid` int(10) UNSIGNED NOT NULL,
   `userid` int(10) UNSIGNED NOT NULL,
   `orokbefogadas` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `orokbefogadas`
---
-
-INSERT INTO `orokbefogadas` (`allatid`, `userid`, `orokbefogadas`) VALUES
-(14, 2, '2022-10-15'),
-(1, 3, '2023-05-23'),
-(6, 11, '2023-10-10'),
-(9, 8, '2023-10-22'),
-(15, 9, '2023-10-02'),
-(10, 5, '2022-10-02'),
-(2, 1, '2023-10-08'),
-(4, 10, '2021-10-10'),
-(11, 4, '2023-03-01'),
-(7, 7, '2023-10-10'),
-(13, 6, '2022-05-02');
 
 -- --------------------------------------------------------
 
@@ -99,32 +80,14 @@ INSERT INTO `orokbefogadas` (`allatid`, `userid`, `orokbefogadas`) VALUES
 -- Tábla szerkezet ehhez a táblához `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userid` int(10) UNSIGNED NOT NULL,
   `igazolvanyszam` varchar(8) NOT NULL,
   `orokbefogado_neve` varchar(50) NOT NULL,
   `emailcim` varchar(100) NOT NULL,
-  `user` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `users`
---
-
-INSERT INTO `users` (`userid`, `igazolvanyszam`, `orokbefogado_neve`, `emailcim`, `user`, `password`) VALUES
-(1, '123456AB', 'Elemér', 'elemer@posta.hu', '', ''),
-(2, '152525MJ', 'Józsika', 'jozsibacsi@hotmail.com', '', ''),
-(3, '194425BB', 'Ferenc', 'ferike34@gmail.com', '', ''),
-(4, '199919JO', 'Pista', 'mcpista@freemail.hu', '', ''),
-(5, '306012BC', 'Majka', 'majka@gmail.hu', '', ''),
-(6, '34t456EF', 'Edit anya', 'edit_anyu@gmail.com', '', ''),
-(7, '543235HR', 'Blanka', 'kutyabarat11@citromail.hu', '', ''),
-(8, '567432FD', ' Janos', 'nagyjanos@gmail.com', '', ''),
-(9, '632901FF', 'Kálmán', 'kálmán@gmail.com', '', ''),
-(10, '789546BK', 'Béla', 'belavagyok@gmail.com', '', ''),
-(11, '987654EF', 'Adam', 'nagyadam@gmail.com', '', '');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -150,7 +113,8 @@ ALTER TABLE `orokbefogadas`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userid`),
   ADD UNIQUE KEY `igazolvanyszam` (`igazolvanyszam`),
-  ADD UNIQUE KEY `emailcim` (`emailcim`);
+  ADD UNIQUE KEY `emailcim` (`emailcim`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
@@ -166,7 +130,7 @@ ALTER TABLE `allat`
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Megkötések a kiírt táblákhoz

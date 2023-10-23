@@ -8,11 +8,10 @@ $db = new Database("localhost", "root", "", "menhely");
 if (!isset($_SESSION['login'])){$_SESSION['login'] = false;}
 
 require_once './layout/head.php';
+$menu = filter_input(INPUT_GET, "menu");
 ?>
 <body>
     <?php
-    $menu = filter_input(INPUT_GET, "menu");
-
     require_once './layout/header.php';
     require_once './layout/menu.php';
     require_once './tartalom.php';
