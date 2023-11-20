@@ -1,0 +1,44 @@
+1. Írasd ki azoknak a pizzáknak a nevét és árát, amelyek ára 1000 forint felett van.
+
+2. Listázd ki azokat a rendelések idejét és megrendelőjének a nevét idő szerint rendezve, amelyeknek a szállítását a 'Gyalogkakukk' pizzafutár szállította.
+	SELECT vevo.vnev, rendeles.idopont 
+	FROM vevo NATURAL JOIN rendeles NATURAL JOIN futar 
+	WHERE futar.fnev = 'Gyalogkakukk' 
+	ORDER BY rendeles.idopont;
+
+3. Találd meg azon pizzák nevét, amelyekből a legtöbbet rendeltek.
+
+
+4. Határozd meg a 'Szendi' megrendelő által leadott rendelések darabszámát.
+
+5. Listázd ki azokat a pizzákat, amelyeket senki sem rendelt még.
+
+6. Írd le azokat a pizzákat, amelyeket legalább három alkalommal rendeltek.
+
+7. Számold meg, hány különböző pizzát rendeltek eddig összesen.
+
+8. Írd le azoknak a pizzáknak a nevét és árát, amelyekből NEM rendeltek legalább 10 darabot.
+
+9. Határozd meg a legdrágább pizza árát.
+
+10. Írd le azokat a rendeléseket, amelyek legalább 3 különböző pizzát tartalmaznak.
+	SELECT tetel.razon FROM tetel GROUP BY tetel.razon HAVING COUNT(*)>=3;
+
+11. Listázd ki azokat a megrendelőket, akik legalább 2 különböző pizzát rendeltek.
+
+12. Találd meg a legtöbb rendelést leadó megrendelő nevét.
+
+13. Írd le azokat a pizzákat, amelyeket a 'Hurrikán' pizzafutár szállított legalább egyszer.
+
+14. Számold meg, hány darab pizza szerepel egy átlagos rendelésben.
+
+15. Listázd ki azokat a pizzákat, amelyeket a 'Gömbvillám' pizzafutár még sosem szállított.
+
+16. Írd le azokat a pizzákat, amelyeket pontosan egyszer rendeltek.
+
+17. Határozd meg azokat a rendeléseket, amelyek legalább 2000 forint értékűek.
+
+18. Írd le azokat a pizzákat, amelyekből az összes rendelés során legalább 20 darabot rendeltek.
+
+19. Határozd meg azon pizzák átlagárát, amelyekből legalább 5 darabot rendeltek.
+
