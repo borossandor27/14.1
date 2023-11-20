@@ -2,10 +2,9 @@ const inputid = document.querySelector("#id");
 const inputUsername = document.querySelector("#username");
 const inputDarab = document.querySelector("#darab");
 const buttonRead = document.querySelector("#read");
-const body = document.getElementsByTagName("body")[0];
 const cards = document.querySelector("#cards");
 
-body.addEventListener("load", getAllUsers, false); //-- a lap betöltésekor is ...
+window.addEventListener("load", getAllUsers); //-- a lap betöltésekor is ...
 buttonRead.addEventListener("click", getAllUsers);
 
 async function getAllUsers() {
@@ -21,7 +20,7 @@ async function getAllUsers() {
 }
 
 function showAllUsersCards(params) {
-    //--paraméter az összes felhasználó adat a JSON-ben
+    //--paraméter az összes felhasználó adata a JSON-ben
     removeAllChild(cards);
     params.forEach(user => {
         appendCard(user);
@@ -29,22 +28,33 @@ function showAllUsersCards(params) {
 }
 
 function appendCard(user) {
-
-    let userCard = document.createElement("div");
-    userCard.className = "card";
-    userCard.style.cssText = "width: 18rem;";
+    //-- minden felhasználót egy új div-be helyezünk
+    let userCard = document.createElement("div"); //-- alapértelmezett div-et hozunk létre
+    userCard.className = "card"; //-- beáálítjuk a class tulajdonságot
+    userCard.style.cssText = "width: 18rem;"; //-- beállítjuk a style tulajdonságot
+    /* a card-on lévő többi elemet (h5, img, p, ...) nem egyenként hozzáadjuk, 
+        hanem szövegként az innerHTML tulajdonság segítségével fogjuk 
+        létrehozni és beállítani őket.
+    */
     let tartalom = `<img src="noimage.jpg" class="card-img-top" alt="noimage.jpg">
     <div class="card-body">
-        <h5 class="card-title">${user.username}</h5>
-        <p class="card-text">${user.id}. Some quick example text to build on the card title and make up the bulk of the
+        <h5 class="card-title">${user.id}. ${user.username}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
             card's content.</p>
         <p>értéke: ${user.darab} db</p>
         <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>`;
     userCard.innerHTML = tartalom;
-    cards.appendChild(userCard);
+
+    cards.appendChild(userCard); //-- létrehozott objektumot behelyezzük a DOM-ba
 }
 function removeAllChild(parent) {
+    /*
+    A DOM hierarchikus adatszerkezetben tárolja az elemeket,
+    ezért egyszerre csak egy elemet tudunk elvenni, 
+    olyat amelyet már nem követ a fában további elem. 
+    (az eltávolítandó elem tartalmazhat további elemeket)
+    */
     while (parent.firstChild) {
         parent.removeChild(parent.lastChild);
     }
