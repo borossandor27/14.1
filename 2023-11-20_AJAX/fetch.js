@@ -26,6 +26,7 @@ function showAllUsersCards(params) {
     //--paraméter az összes felhasználó adata JSON-ben
     removeAllChild(cards);
     params.forEach(user => {
+        
         appendCard(user);
     });
 }
@@ -33,7 +34,7 @@ function showAllUsersCards(params) {
 function appendCard(user) {
     //-- minden felhasználót egy új div-be helyezünk
     let userCard = document.createElement("div"); //-- alapértelmezett div-et hozunk létre
-    userCard.className = "card"; //-- beáálítjuk a class tulajdonságot
+    userCard.className = "card m-2"; //-- beáálítjuk a class tulajdonságot
     userCard.style.cssText = "width: 18rem;"; //-- beállítjuk a style tulajdonságot
     /* a card-on lévő többi elemet (h5, img, p, ...) nem egyenként hozzáadjuk, 
         hanem szövegként az innerHTML tulajdonság segítségével fogjuk 
@@ -90,3 +91,64 @@ function inputMezokFeltoltese(adatok) {
 }
 
 //-- új felhasználó rögzítése
+buttonCreate.addEventListener("click", async () => {
+    let url = "https://retoolapi.dev/Hfa9uy/data";
+    let data = {
+        username: inputUsername.value,
+        darab: inputDarab.value
+    };
+    try {
+        await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+        getAllUsers();
+        inputUsername.value = "";
+        inputDarab.value = "1";
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+//-- felhasználó adatainak módosítása
+buttonUpdate.addEventListener("click", async () => {
+    let url = "https://retoolapi.dev/Hfa9uy/data/" + inputid.value;
+    let data = {
+        username: inputUsername.value,
+        darab: inputDarab.value
+    };
+    try {
+        await fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+        getAllUsers();
+        inputUsername.value = "";
+        inputDarab.value = "1";
+        inputid.value = "";
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+//-- felhasználó törlése
+buttonDelete.addEventListener("click", async () => {
+    let url = "https://retoolapi.dev/Hfa9uy/data/" + inputid.value;
+    try {
+        await fetch(url, {
+            method: "DELETE"
+        });
+        getAllUsers();
+        inputUsername.value = "";
+        inputDarab.value = "1";
+        inputid.value = "";
+    } catch (error) {
+        console.log(error);
+    }
+});
