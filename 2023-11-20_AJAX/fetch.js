@@ -1,7 +1,10 @@
 const inputid = document.querySelector("#id");
 const inputUsername = document.querySelector("#username");
 const inputDarab = document.querySelector("#darab");
+const buttonCreate = document.querySelector("#create");
 const buttonRead = document.querySelector("#read");
+const buttonUpdate = document.querySelector("#update");
+const buttonDelete = document.querySelector("#delete");
 const cards = document.querySelector("#cards");
 
 window.addEventListener("load", getAllUsers); //-- a lap betöltésekor is ...
@@ -85,3 +88,5 @@ function inputMezokFeltoltese(adatok) {
     inputDarab.value = adatok.darab;
     location.href = "#adatokSzerkesztese"; //-- az oldal tetejére görget
 }
+
+//-- új felhasználó rögzítése
