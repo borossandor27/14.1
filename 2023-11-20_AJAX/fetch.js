@@ -20,7 +20,7 @@ async function getAllUsers() {
 }
 
 function showAllUsersCards(params) {
-    //--paraméter az összes felhasználó adata a JSON-ben
+    //--paraméter az összes felhasználó adata JSON-ben
     removeAllChild(cards);
     params.forEach(user => {
         appendCard(user);
@@ -42,7 +42,7 @@ function appendCard(user) {
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
             card's content.</p>
         <p>értéke: ${user.darab} db</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <button class="btn btn-primary" value="${user.id}" onclick="kivalasztottFelhasznaloAdatainakBetolteseBeviteliMezokbe(this.value)">Kiválasztás</button>
     </div>`;
     userCard.innerHTML = tartalom;
 
@@ -58,4 +58,30 @@ function removeAllChild(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.lastChild);
     }
+}
+
+async function kivalasztottFelhasznaloAdatainakBetolteseBeviteliMezokbe(id) {
+    //-- az adatbázisból lekérjük az id-hoz tartozó adatokat
+    beviteli_mezok_torlese();
+    let url = "https://retoolapi.dev/Hfa9uy/data/" + id;
+    console.log(url);
+    try {
+        await fetch(url)
+            .then((response) => response.json())
+            .then((data) => inputMezokFeltoltese(data));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function beviteli_mezok_torlese() {
+    inputid.value = "";
+    inputUsername.value = "";
+    inputDarab.value = "";
+}
+function inputMezokFeltoltese(adatok) {
+    inputid.value = adatok.id;
+    inputUsername.value = adatok.username;
+    inputDarab.value = adatok.darab;
+    location.href = "#adatokSzerkesztese"; //-- az oldal tetejére görget
 }
