@@ -12,7 +12,7 @@
             $image = "./imgs/noimage.jpg";
         }
         $card = '<div class="card" style="width: 18rem;">
-                    <img src="'.$image.'" class="card-img-top" alt="...">
+                    <img src="'.$image.'" class="card-img-top" alt="noimage.jpg">
                     <div class="card-body">
                         <h5 class="card-title">' . $row['termekfajta'] . '</h5>' .
                 '<p class="card-text">márka: ' . $row['marka'] . '</p>' .

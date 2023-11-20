@@ -12,7 +12,7 @@
             $image = "./images/noimage.jpg";
         }
         $card = '<div class="card" style="width: 18rem;">
-                    <img src="'.$image.'" class="card-img-top" alt="...">
+                    <img src="'.$image.'" class="card-img-top" alt="noimage.jpg">
                     <div class="card-body">
                         <h5 class="card-title">' . $row['allat_neve'] . '</h5>' .
                 '<p class="card-text">született: ' . $row['szuletesi_ido'] . '</p>' .
