@@ -1,0 +1,7 @@
+/* CSS */
+header {
+    background-image: url('https://picsum.photos/1200');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}

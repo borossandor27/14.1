@@ -26,9 +26,10 @@ async function getAllUsers() {
 function showAllUsers(users) {
     let html = "";
     users.forEach(user => {
+        const imageUrl = `https://picsum.photos/200?random=${Math.random()}`;
         html += `
-        <div class="card" style="width: 18rem;">
-        <img src="noimage.jpg" class="card-img-top" alt="noimage.jpg">
+        <div class="card m-1" style="width: 18rem;">
+        <img src="${imageUrl}" class="card-img-top" alt="noimage.jpg">
         <div class="card-body">
             <h5 class="card-title">${user.id}. ${user.username}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
