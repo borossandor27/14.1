@@ -25,20 +25,23 @@ async function getAllUsers() {
 //--- megjeleníti az összes usert ---------------------
 function showAllUsers(users) {
     let html = "";
-    users.forEach(user => {
-        const imageUrl = `https://picsum.photos/200?random=${Math.random()}`;
-        html += `
-        <div class="card m-1" style="width: 18rem;">
-        <img src="${imageUrl}" class="card-img-top" alt="noimage.jpg">
-        <div class="card-body">
-            <h5 class="card-title">${user.id}. ${user.username}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-            <p class="card-text">Darab: ${user.darab}</p>
-            <button class="btn btn-primary" onClick="betoltInputMezobe(${user.id})">Kiválaszt</button>
-        </div>
-    </div>
-        `;
+    users.forEach(async (user) => {
+        let imageUrl = `https://picsum.photos/200?random=${Math.random()}`;
+        try {
+            html += `
+                <div class="card m-1" style="width: 18rem;">
+                    <img src="${imageUrl}" class="card-img-top" alt="noimage.jpg">
+                    <div class="card-body">
+                        <h5 class="card-title">${user.id}. ${user.username}</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, illum! Labore iure quam quasi sed perferendis tempora amet tenetur assumenda consequatur, dicta corrupti dolores. Nam enim ratione dignissimos quos quasi.</p>
+                        <p class="card-text">Darab: ${user.darab}</p>
+                        <button class="btn btn-primary" onClick="betoltInputMezobe(${user.id})">Kiválaszt</button>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.log(error);
+        }
     });
     divCards.innerHTML = html;
 }
